@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
 public class Main {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -27,9 +29,11 @@ public class Main {
 		System.out.println("------------------------------------------------------------");
 		System.out.println();
 		
-		Class.forName("org.apache.derby.jdbc.ClientDriver");		
+		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		
-		Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/C:/workspaces/db_exp/BigTableGen/exp_db;create=true");
+		String connectionURL = "jdbc:derby://localhost:1527/C:/workspaces/db_exp/BigTableGen/exp_db;create=true";
+		
+		Connection conn = DriverManager.getConnection(connectionURL);
 		
 		conn.setAutoCommit(false);
 		
@@ -97,22 +101,22 @@ public class Main {
 //		st.close();
 //		conn.commit();
 		
-		String query = "select avg(id) from tab5";
-		
-		long start = System.currentTimeMillis();
-		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery(query);
-		int count = 0;
-		if(rs.next()) {
-			count = rs.getInt(1);
-		}
-		long fi = System.currentTimeMillis();
-		System.out.println("Количество записей (select count(*) from tab5) равно " + count);
-		System.out.println("Вычеслено за  " + (fi - start) + "мс");
-		
-		conn.commit();
-		rs.close();
-		st.close();
+//		String query = "select avg(id) from tab5";
+//		
+//		long start = System.currentTimeMillis();
+//		Statement st = conn.createStatement();
+//		ResultSet rs = st.executeQuery(query);
+//		int count = 0;
+//		if(rs.next()) {
+//			count = rs.getInt(1);
+//		}
+//		long fi = System.currentTimeMillis();
+//		System.out.println("Количество записей (select count(*) from tab5) равно " + count);
+//		System.out.println("Вычеслено за  " + (fi - start) + "мс");
+//		
+//		conn.commit();
+//		rs.close();
+//		st.close();
 		
 		conn.close();
 		
